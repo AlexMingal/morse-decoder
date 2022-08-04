@@ -40,36 +40,39 @@ const MORSE_TABLE = {
 
 function decode(expr) {
 
-  let arr = expr.split(''),
-      result = [],
-      char = 0;
+  let letter = '',
+      code = '',
+      pos = 0,
+      part = '',
+      word = '';
+      
+  do {                                                     
+    part = expr.substring(pos, pos + 10);              // берём кусок из 10 символов (это код одной буквы)
+    if (part === '**********') { word = word + ' ' }   // если этот кусок равен звёздочкам, это пробел - пушим пробел в итоговую строку
 
-  console.log(arr);
+    else { 
+      letter = part.slice(part.indexOf('1'));          // иначе: берём часть строки, начинающууся с '1', всё что раньше - нули, их отбросим 
 
-  for (i in arr) {
-    let charN = Object.values(MORSE_TABLE).indexOf(arr[i]);
-    console.log(charN);
-    console.log(Object.keys(MORSE_TABLE)[charN]);
+      for (let i = 0; i < letter.length; i+=2) {       // цикл составления кода из цифр, берём по две цифры, поэтому i+=2 
+        let char = letter.substring(i, i+2);
+        if (char == 10) { code = code + '.' }          // пушим соответствующие '10' и '11' символы в переменную содержащую код буквы
+        if (char == 11) { code = code + '-' } 
+      }
+
+      word = word + MORSE_TABLE[code];              // по полученному коду пушим в итоговую переменную символ из таблицы морзе  
+
+      code = '';                                    // обнуляем переменную с кодом, 
+    }
+
+    pos += 10;                                      // перемещаемся дальше по input строке дальше на 10 символов
+
+  } while (pos < expr.length );                     // если позиция больше чем длина инпут-строки - выходим из цикла
 
 
-
-
-/*
-    console.log(Object.values(MORSE_TABLE)[arr[i]])
-    console.log(Object.keys(MORSE_TABLE).indexOf[i])
-    result.push(char);
-*/
-  }
-
-
- // console.log(result)
-  return 
+  return (word);
 }
 
-decode('najleszykot');
 
-
-// module.exports = {
-//     decode
-// }
-
+module.exports = {
+     decode
+}
