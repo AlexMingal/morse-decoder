@@ -37,10 +37,39 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+
 function decode(expr) {
-    // write your solution here
+
+  let arr = expr.split(''),
+      result = [],
+      char = 0;
+
+  console.log(arr);
+
+  for (i in arr) {
+    let charN = Object.values(MORSE_TABLE).indexOf(arr[i]);
+    console.log(charN);
+    console.log(Object.keys(MORSE_TABLE)[charN]);
+
+
+
+
+/*
+    console.log(Object.values(MORSE_TABLE)[arr[i]])
+    console.log(Object.keys(MORSE_TABLE).indexOf[i])
+    result.push(char);
+*/
+  }
+
+
+ // console.log(result)
+  return 
 }
 
-module.exports = {
-    decode
-}
+decode('najleszykot');
+
+
+// module.exports = {
+//     decode
+// }
+
